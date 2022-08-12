@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Service
-public class UserServiceImplement implements UsuarioService {
+public class UsuarioServiceImplement implements UsuarioService {
 
     @Autowired
     private UsuarioCrud usuarioCrud;
@@ -42,8 +42,12 @@ public class UserServiceImplement implements UsuarioService {
     @Override
     @Transactional
     public Usuario save(Usuario usuario) {
-        if ((usuario.getIdUsuario() != null) || !(usuarioCrud.findById(usuario.getIdUsuario()).isPresent()))
+        if ((usuario.getIdUsuario() != null) || !(usuarioCrud.findById(usuario.getIdUsuario()).isPresent())) {
             usuario.setContrasena(encoder.encode(usuario.getContrasena()));
+            System.out.println("Ususario pass encryp: " + usuario);
+        } else {
+            System.out.println("Ususario es nuevo");
+        }
         return usuarioCrud.save(usuario);
     }
 

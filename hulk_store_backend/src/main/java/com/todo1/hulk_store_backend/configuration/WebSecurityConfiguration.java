@@ -1,7 +1,6 @@
 package com.todo1.hulk_store_backend.configuration;
 
 import com.todo1.hulk_store_backend.service.UsuarioDetailsService;
-import com.todo1.hulk_store_backend.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
