@@ -19,20 +19,6 @@ CREATE SCHEMA IF NOT EXISTS `hulk_store_dev` DEFAULT CHARACTER SET utf8mb3 ;
 USE `hulk_store_dev` ;
 
 -- -----------------------------------------------------
--- Table `hulk_store_dev`.`invoices`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `hulk_store_dev`.`invoices` ;
-
-CREATE TABLE IF NOT EXISTS `hulk_store_dev`.`invoices` (
-  `id_invoice` BIGINT NOT NULL AUTO_INCREMENT,
-  `reference` VARCHAR(255) NOT NULL,
-  `is_selling` TINYINT NULL DEFAULT 0,
-  PRIMARY KEY (`id_invoice`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
-
-
--- -----------------------------------------------------
 -- Table `hulk_store_dev`.`users`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `hulk_store_dev`.`users` ;
@@ -42,6 +28,34 @@ CREATE TABLE IF NOT EXISTS `hulk_store_dev`.`users` (
   `nick_name` VARCHAR(255) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id_user`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `hulk_store_dev`.`invoices`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `hulk_store_dev`.`invoices` ;
+
+CREATE TABLE IF NOT EXISTS `hulk_store_dev`.`invoices` (
+  `id_invoice` BIGINT NOT NULL AUTO_INCREMENT,
+  `reference` VARCHAR(255) NOT NULL,
+  `is_selling` TINYINT NULL DEFAULT 0,
+  `buyer` BIGINT NOT NULL,
+  `seller` BIGINT NOT NULL,
+  PRIMARY KEY (`id_invoice`),
+  INDEX `fk_invoices_users1_idx` (`buyer` ASC) VISIBLE,
+  INDEX `fk_invoices_users2_idx` (`seller` ASC) VISIBLE,
+  CONSTRAINT `fk_invoices_users1`
+    FOREIGN KEY (`buyer`)
+    REFERENCES `hulk_store_dev`.`users` (`id_user`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_invoices_users2`
+    FOREIGN KEY (`seller`)
+    REFERENCES `hulk_store_dev`.`users` (`id_user`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
@@ -78,31 +92,6 @@ CREATE TABLE IF NOT EXISTS `hulk_store_dev`.`products` (
   `name` VARCHAR(45) NOT NULL,
   `reference` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_product`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
-
-
--- -----------------------------------------------------
--- Table `hulk_store_dev`.`invoices_has_users`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `hulk_store_dev`.`invoices_has_users` ;
-
-CREATE TABLE IF NOT EXISTS `hulk_store_dev`.`invoices_has_users` (
-  `id_invoice` BIGINT NOT NULL,
-  `id_user` BIGINT NOT NULL,
-  PRIMARY KEY (`id_invoice`, `id_user`),
-  INDEX `fk_invoices_has_users_users1_idx` (`id_user` ASC) VISIBLE,
-  INDEX `fk_invoices_has_users_invoices1_idx` (`id_invoice` ASC) VISIBLE,
-  CONSTRAINT `fk_invoices_has_users_invoices1`
-    FOREIGN KEY (`id_invoice`)
-    REFERENCES `hulk_store_dev`.`invoices` (`id_invoice`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_invoices_has_users_users1`
-    FOREIGN KEY (`id_user`)
-    REFERENCES `hulk_store_dev`.`users` (`id_user`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 

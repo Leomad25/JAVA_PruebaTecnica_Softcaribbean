@@ -15,6 +15,8 @@ public class Person {
     private String lastName;
     @Column(name = "identification", length = 45, nullable = false)
     private String identification;
+    @Column(name = "id_user", nullable = false)
+    private Long idUser;
 
     // References
     @OneToOne
@@ -24,11 +26,12 @@ public class Person {
     public Person() {
     }
 
-    public Person(Long idPerson, String firstName, String lastName, String identification, User user) {
+    public Person(Long idPerson, String firstName, String lastName, String identification, Long idUser, User user) {
         this.idPerson = idPerson;
         this.firstName = firstName;
         this.lastName = lastName;
         this.identification = identification;
+        this.idUser = idUser;
         this.user = user;
     }
 
@@ -60,6 +63,14 @@ public class Person {
         return identification;
     }
 
+    public Long getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(Long idUser) {
+        this.idUser = idUser;
+    }
+
     public void setIdentification(String identification) {
         this.identification = identification;
     }
@@ -79,7 +90,7 @@ public class Person {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", identification='" + identification + '\'' +
-                ", user=" + user +
+                ", idUser=" + idUser +
                 '}';
     }
 }

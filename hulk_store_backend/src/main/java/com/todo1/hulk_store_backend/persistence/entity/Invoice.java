@@ -1,6 +1,5 @@
 package com.todo1.hulk_store_backend.persistence.entity;
 
-import com.todo1.hulk_store_backend.persistence.entity.compound.InvoiceHasUser;
 import com.todo1.hulk_store_backend.persistence.entity.compound.InvoiceHasProduct;
 
 import javax.persistence.*;
@@ -12,23 +11,27 @@ public class Invoice {
     // Columns
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_user")
+    @Column(name = "id_invoice")
     private Long idInvoice;
     @Column(name = "refencence", length = 255, nullable = false)
     private String reference;
+    @Column(name = "buyer")
+    private Long buyer;
+    @Column(name = "seller")
+    private Long seller;
 
     // References
     @OneToMany(mappedBy = "invoice")
-    private List<InvoiceHasUser> invoicesHasUsers;
-    @OneToMany(mappedBy = "invoice")
     private List<InvoiceHasProduct> invoiceHasProducts;
+    @ManyToOne
+    @JoinColumn(name = "buyer", insertable = false, updatable = false)
+    private User userBuyer;
+    @ManyToOne
+    @JoinColumn(name = "seller", insertable = false, updatable = false)
+    private User userSeller;
+
 
     public Invoice() {
-    }
-
-    public Invoice(Long idInvoice, String reference) {
-        this.idInvoice = idInvoice;
-        this.reference = reference;
     }
 
     public Long getIdInvoice() {
@@ -47,14 +50,6 @@ public class Invoice {
         this.reference = reference;
     }
 
-    public List<InvoiceHasUser> getInvoicesHasUsers() {
-        return invoicesHasUsers;
-    }
-
-    public void setInvoicesHasUsers(List<InvoiceHasUser> invoicesHasUsers) {
-        this.invoicesHasUsers = invoicesHasUsers;
-    }
-
     public List<InvoiceHasProduct> getInvoiceHasProducts() {
         return invoiceHasProducts;
     }
@@ -68,7 +63,6 @@ public class Invoice {
         return "Invoice{" +
                 "idInvoice=" + idInvoice +
                 ", reference='" + reference + '\'' +
-                ", invoicesHasUsers=" + invoicesHasUsers +
                 ", invoiceHasProducts=" + invoiceHasProducts +
                 '}';
     }

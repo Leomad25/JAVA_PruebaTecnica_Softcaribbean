@@ -5,19 +5,11 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 @Embeddable
-public class InvoiceHasUserPK implements Serializable {
+public class InvoiceHasProductPK implements Serializable {
     @Column(name = "id_invoice")
     private Long idInvoice;
-    @Column(name = "id_user")
-    private Long idUser;
-
-    public InvoiceHasUserPK() {
-    }
-
-    public InvoiceHasUserPK(Long idInvoice, Long idUser) {
-        this.idInvoice = idInvoice;
-        this.idUser = idUser;
-    }
+    @Column(name = "id_product")
+    private Long idProduct;
 
     public Long getIdInvoice() {
         return idInvoice;
@@ -27,11 +19,11 @@ public class InvoiceHasUserPK implements Serializable {
         this.idInvoice = idInvoice;
     }
 
-    public Long getIdUser() {
-        return idUser;
+    public Long getIdProduct() {
+        return idProduct;
     }
 
-    public void setIdUser(Long idUser) {
-        this.idUser = idUser;
+    public void setIdProduct(Long idProduct) {
+        this.idProduct = idProduct;
     }
 }

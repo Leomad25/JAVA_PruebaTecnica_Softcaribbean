@@ -25,10 +25,11 @@ public class Product {
     public Product() {
     }
 
-    public Product(Long idProduct, String name, String reference) {
+    public Product(Long idProduct, String name, String reference, List<InvoiceHasProduct> invoicesHasProducts) {
         this.idProduct = idProduct;
         this.name = name;
         this.reference = reference;
+        this.invoicesHasProducts = invoicesHasProducts;
     }
 
     public Long getIdProduct() {

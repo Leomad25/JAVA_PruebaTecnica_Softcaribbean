@@ -1,7 +1,5 @@
 package com.todo1.hulk_store_backend.persistence.entity;
 
-import com.todo1.hulk_store_backend.persistence.entity.compound.InvoiceHasUser;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -19,20 +17,24 @@ public class User {
     private String password;
 
     // References
-    @OneToMany(mappedBy = "user")
-    private List<InvoiceHasUser> invoicesHasUsers;
     @OneToOne(mappedBy = "user")
     private Person person;
     @OneToOne(mappedBy = "user")
     private Payment payment;
+    @OneToMany(mappedBy = "userBuyer")
+    private List<Invoice> invoicesBuyer;
+    @OneToMany(mappedBy = "userSeller")
+    private List<Invoice> invoicesSeller;
 
     public User() {
     }
 
-    public User(Long idUser, String nickName, String password) {
+    public User(Long idUser, String nickName, String password, Person person, Payment payment) {
         this.idUser = idUser;
         this.nickName = nickName;
         this.password = password;
+        this.person = person;
+        this.payment = payment;
     }
 
     public Long getIdUser() {
@@ -63,14 +65,6 @@ public class User {
         this.idUser = idUser;
     }
 
-    public List<InvoiceHasUser> getInvoicesHasUsers() {
-        return invoicesHasUsers;
-    }
-
-    public void setInvoicesHasUsers(List<InvoiceHasUser> invoicesHasUsers) {
-        this.invoicesHasUsers = invoicesHasUsers;
-    }
-
     public Person getPerson() {
         return person;
     }
@@ -93,7 +87,6 @@ public class User {
                 "idUser=" + idUser +
                 ", nickName='" + nickName + '\'' +
                 ", password='" + password + '\'' +
-                ", invoicesHasUsers=" + invoicesHasUsers +
                 ", person=" + person +
                 ", payment=" + payment +
                 '}';

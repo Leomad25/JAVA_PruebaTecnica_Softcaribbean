@@ -14,6 +14,8 @@ public class Payment {
     private String number;
     @Column(name = "cvc", nullable = false)
     private String cvc;
+    @Column(name = "id_user", nullable = false)
+    private Long idUser;
 
     // References
     @OneToOne
@@ -23,10 +25,11 @@ public class Payment {
     public Payment() {
     }
 
-    public Payment(Long idPayment, String number, String cvc, User user) {
+    public Payment(Long idPayment, String number, String cvc, Long idUser, User user) {
         this.idPayment = idPayment;
         this.number = number;
         this.cvc = cvc;
+        this.idUser = idUser;
         this.user = user;
     }
 
@@ -54,6 +57,14 @@ public class Payment {
         this.cvc = cvc;
     }
 
+    public Long getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(Long idUser) {
+        this.idUser = idUser;
+    }
+
     public User getUser() {
         return user;
     }
@@ -68,7 +79,7 @@ public class Payment {
                 "idPayment=" + idPayment +
                 ", number='" + number + '\'' +
                 ", cvc='" + cvc + '\'' +
-                ", user=" + user +
+                ", idUser=" + idUser +
                 '}';
     }
 }

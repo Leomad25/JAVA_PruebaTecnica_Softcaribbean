@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 public class InvoiceHasProduct {
     // Columns
     @EmbeddedId
-    private InvoicesHasProductPK id;
+    private InvoiceHasProductPK id;
     @Column(name = "count", nullable = false)
     private Integer count;
     @Column(name = "selled")
@@ -29,18 +29,20 @@ public class InvoiceHasProduct {
     public InvoiceHasProduct() {
     }
 
-    public InvoiceHasProduct(InvoicesHasProductPK id, Integer count, Integer selled, BigDecimal value) {
+    public InvoiceHasProduct(InvoiceHasProductPK id, Integer count, Integer selled, BigDecimal value, Invoice invoice, Product product) {
         this.id = id;
         this.count = count;
         this.selled = selled;
         this.value = value;
+        this.invoice = invoice;
+        this.product = product;
     }
 
-    public InvoicesHasProductPK getId() {
+    public InvoiceHasProductPK getId() {
         return id;
     }
 
-    public void setId(InvoicesHasProductPK id) {
+    public void setId(InvoiceHasProductPK id) {
         this.id = id;
     }
 
