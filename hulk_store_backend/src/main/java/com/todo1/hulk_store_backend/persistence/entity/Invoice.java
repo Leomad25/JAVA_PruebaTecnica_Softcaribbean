@@ -1,6 +1,7 @@
 package com.todo1.hulk_store_backend.persistence.entity;
 
 import com.todo1.hulk_store_backend.persistence.entity.compound.InvoiceHasUser;
+import com.todo1.hulk_store_backend.persistence.entity.compound.InvoiceHasProduct;
 
 import javax.persistence.*;
 import java.util.List;
@@ -19,6 +20,8 @@ public class Invoice {
     // References
     @OneToMany(mappedBy = "invoice")
     private List<InvoiceHasUser> invoicesHasUsers;
+    @OneToMany(mappedBy = "invoice")
+    private List<InvoiceHasProduct> invoiceHasProducts;
 
     public Invoice() {
     }
@@ -52,11 +55,21 @@ public class Invoice {
         this.invoicesHasUsers = invoicesHasUsers;
     }
 
+    public List<InvoiceHasProduct> getInvoiceHasProducts() {
+        return invoiceHasProducts;
+    }
+
+    public void setInvoiceHasProducts(List<InvoiceHasProduct> invoiceHasProducts) {
+        this.invoiceHasProducts = invoiceHasProducts;
+    }
+
     @Override
     public String toString() {
         return "Invoice{" +
                 "idInvoice=" + idInvoice +
                 ", reference='" + reference + '\'' +
+                ", invoicesHasUsers=" + invoicesHasUsers +
+                ", invoiceHasProducts=" + invoiceHasProducts +
                 '}';
     }
 }

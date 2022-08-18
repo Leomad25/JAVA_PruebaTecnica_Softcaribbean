@@ -26,6 +26,7 @@ DROP TABLE IF EXISTS `hulk_store_dev`.`invoices` ;
 CREATE TABLE IF NOT EXISTS `hulk_store_dev`.`invoices` (
   `id_invoice` BIGINT NOT NULL AUTO_INCREMENT,
   `reference` VARCHAR(255) NOT NULL,
+  `is_selling` TINYINT NULL DEFAULT 0,
   PRIMARY KEY (`id_invoice`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
@@ -56,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `hulk_store_dev`.`persons` (
   `last_name` VARCHAR(45) NOT NULL,
   `identification` VARCHAR(45) NOT NULL,
   `id_user` BIGINT NOT NULL,
-  PRIMARY KEY (`id_person`, `id_user`),
+  PRIMARY KEY (`id_person`),
   INDEX `fk_persons_users1_idx` (`id_user` ASC) VISIBLE,
   CONSTRAINT `fk_persons_users1`
     FOREIGN KEY (`id_user`)
@@ -76,7 +77,6 @@ CREATE TABLE IF NOT EXISTS `hulk_store_dev`.`products` (
   `id_product` BIGINT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `reference` VARCHAR(45) NOT NULL,
-  `count` INT NULL DEFAULT '0',
   PRIMARY KEY (`id_product`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
@@ -108,33 +108,6 @@ DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
--- Table `hulk_store_dev`.`invoices_has_users_has_products`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `hulk_store_dev`.`invoices_has_users_has_products` ;
-
-CREATE TABLE IF NOT EXISTS `hulk_store_dev`.`invoices_has_users_has_products` (
-  `id_invoice` BIGINT NOT NULL,
-  `id_user` BIGINT NOT NULL,
-  `id_product` BIGINT NOT NULL,
-  `count` INT NOT NULL,
-  PRIMARY KEY (`id_invoice`, `id_user`, `id_product`),
-  INDEX `fk_invoices_has_users_has_products_products1_idx` (`id_product` ASC) VISIBLE,
-  INDEX `fk_invoices_has_users_has_products_invoices_has_users1_idx` (`id_invoice` ASC, `id_user` ASC) VISIBLE,
-  CONSTRAINT `fk_invoices_has_users_has_products_invoices_has_users1`
-    FOREIGN KEY (`id_invoice` , `id_user`)
-    REFERENCES `hulk_store_dev`.`invoices_has_users` (`id_invoice` , `id_user`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_invoices_has_users_has_products_products1`
-    FOREIGN KEY (`id_product`)
-    REFERENCES `hulk_store_dev`.`products` (`id_product`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
-
-
--- -----------------------------------------------------
 -- Table `hulk_store_dev`.`payments`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `hulk_store_dev`.`payments` ;
@@ -144,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `hulk_store_dev`.`payments` (
   `number` VARCHAR(255) NOT NULL,
   `cvc` VARCHAR(255) NOT NULL,
   `id_user` BIGINT NOT NULL,
-  PRIMARY KEY (`id_payment`, `id_user`),
+  PRIMARY KEY (`id_payment`),
   INDEX `fk_payments_users1_idx` (`id_user` ASC) VISIBLE,
   CONSTRAINT `fk_payments_users1`
     FOREIGN KEY (`id_user`)
@@ -152,6 +125,34 @@ CREATE TABLE IF NOT EXISTS `hulk_store_dev`.`payments` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `hulk_store_dev`.`invoices_has_products`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `hulk_store_dev`.`invoices_has_products` ;
+
+CREATE TABLE IF NOT EXISTS `hulk_store_dev`.`invoices_has_products` (
+  `id_invoice` BIGINT NOT NULL,
+  `id_product` BIGINT NOT NULL,
+  `count` INT NOT NULL,
+  `selled` INT NULL,
+  `value` DECIMAL(32,2) NOT NULL,
+  PRIMARY KEY (`id_invoice`, `id_product`),
+  INDEX `fk_invoices_has_products_products1_idx` (`id_product` ASC) VISIBLE,
+  INDEX `fk_invoices_has_products_invoices1_idx` (`id_invoice` ASC) VISIBLE,
+  CONSTRAINT `fk_invoices_has_products_invoices1`
+    FOREIGN KEY (`id_invoice`)
+    REFERENCES `hulk_store_dev`.`invoices` (`id_invoice`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_invoices_has_products_products1`
+    FOREIGN KEY (`id_product`)
+    REFERENCES `hulk_store_dev`.`products` (`id_product`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

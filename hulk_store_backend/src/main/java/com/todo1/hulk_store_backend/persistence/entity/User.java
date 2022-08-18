@@ -21,6 +21,10 @@ public class User {
     // References
     @OneToMany(mappedBy = "user")
     private List<InvoiceHasUser> invoicesHasUsers;
+    @OneToOne(mappedBy = "user")
+    private Person person;
+    @OneToOne(mappedBy = "user")
+    private Payment payment;
 
     public User() {
     }
@@ -67,12 +71,31 @@ public class User {
         this.invoicesHasUsers = invoicesHasUsers;
     }
 
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                "user=" + idUser +
+                "idUser=" + idUser +
                 ", nickName='" + nickName + '\'' +
                 ", password='" + password + '\'' +
+                ", invoicesHasUsers=" + invoicesHasUsers +
+                ", person=" + person +
+                ", payment=" + payment +
                 '}';
     }
 }

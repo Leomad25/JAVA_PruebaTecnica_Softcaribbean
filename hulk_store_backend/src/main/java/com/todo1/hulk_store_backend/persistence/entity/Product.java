@@ -1,6 +1,6 @@
 package com.todo1.hulk_store_backend.persistence.entity;
 
-import com.todo1.hulk_store_backend.persistence.entity.compound.InvoiceHasUserHasProduct;
+import com.todo1.hulk_store_backend.persistence.entity.compound.InvoiceHasProduct;
 
 import javax.persistence.*;
 import java.util.List;
@@ -17,22 +17,18 @@ public class Product {
     private String name;
     @Column(name = "reference", length = 45, nullable = false)
     private String reference;
-    @Column(name = "count")
-    private Integer count;
 
     // References
     @OneToMany(mappedBy = "product")
-    private List<InvoiceHasUserHasProduct> invoicesHasUsersHasProducts;
-
+    private List<InvoiceHasProduct> invoicesHasProducts;
 
     public Product() {
     }
 
-    public Product(Long idProduct, String name, String reference, Integer count) {
+    public Product(Long idProduct, String name, String reference) {
         this.idProduct = idProduct;
         this.name = name;
         this.reference = reference;
-        this.count = count;
     }
 
     public Long getIdProduct() {
@@ -59,20 +55,12 @@ public class Product {
         this.reference = reference;
     }
 
-    public Integer getCount() {
-        return count;
+    public List<InvoiceHasProduct> getInvoicesHasProducts() {
+        return invoicesHasProducts;
     }
 
-    public void setCount(Integer count) {
-        this.count = count;
-    }
-
-    public List<InvoiceHasUserHasProduct> getInvoicesHasUsersHasProducts() {
-        return invoicesHasUsersHasProducts;
-    }
-
-    public void setInvoicesHasUsersHasProducts(List<InvoiceHasUserHasProduct> invoicesHasUsersHasProducts) {
-        this.invoicesHasUsersHasProducts = invoicesHasUsersHasProducts;
+    public void setInvoicesHasProducts(List<InvoiceHasProduct> invoicesHasProducts) {
+        this.invoicesHasProducts = invoicesHasProducts;
     }
 
     @Override
@@ -81,7 +69,7 @@ public class Product {
                 "idProduct=" + idProduct +
                 ", name='" + name + '\'' +
                 ", reference='" + reference + '\'' +
-                ", count=" + count +
+                ", invoicesHasProducts=" + invoicesHasProducts +
                 '}';
     }
 }

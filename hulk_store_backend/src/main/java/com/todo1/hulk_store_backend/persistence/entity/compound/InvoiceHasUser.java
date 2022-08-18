@@ -20,8 +20,6 @@ public class InvoiceHasUser {
     @ManyToOne
     @JoinColumn(name = "id_invoice", insertable = false, updatable = false)
     private Invoice invoice;
-    @OneToOne(mappedBy = "invoiceHasUser")
-    private List<InvoiceHasUserHasProduct> invoicesHasUsersHasProducts;
 
     public InvoiceHasUser() {
     }
@@ -54,19 +52,12 @@ public class InvoiceHasUser {
         this.invoice = invoice;
     }
 
-    public List<InvoiceHasUserHasProduct> getInvoicesHasUsersHasProducts() {
-        return invoicesHasUsersHasProducts;
-    }
-
-    public void setInvoicesHasUsersHasProducts(List<InvoiceHasUserHasProduct> invoicesHasUsersHasProducts) {
-        this.invoicesHasUsersHasProducts = invoicesHasUsersHasProducts;
-    }
-
     @Override
     public String toString() {
         return "InvoiceHasUser{" +
                 "id=" + id +
                 ", user=" + user +
+                ", invoice=" + invoice +
                 '}';
     }
 }
