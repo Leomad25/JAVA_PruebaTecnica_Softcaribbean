@@ -5,7 +5,11 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {
+        PersonMapper.class,
+        PaymentMapper.class,
+        InvoiceMapper.class
+})
 public interface UserMapper {
     @Mappings({
             @Mapping(source = "idUser", target = "idUser"),

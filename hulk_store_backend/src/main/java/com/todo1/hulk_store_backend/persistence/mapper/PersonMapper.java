@@ -5,7 +5,9 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {
+    UserMapper.class
+})
 public interface PersonMapper {
     @Mappings({
             @Mapping(source = "idPerson", target = "idPerson"),
