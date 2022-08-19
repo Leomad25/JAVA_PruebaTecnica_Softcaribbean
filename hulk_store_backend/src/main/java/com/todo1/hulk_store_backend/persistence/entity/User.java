@@ -29,12 +29,14 @@ public class User {
     public User() {
     }
 
-    public User(Long idUser, String nickName, String password, Person person, Payment payment) {
+    public User(Long idUser, String nickName, String password, Person person, Payment payment, List<Invoice> invoicesBuyer, List<Invoice> invoicesSeller) {
         this.idUser = idUser;
         this.nickName = nickName;
         this.password = password;
         this.person = person;
         this.payment = payment;
+        this.invoicesBuyer = invoicesBuyer;
+        this.invoicesSeller = invoicesSeller;
     }
 
     public Long getIdUser() {
@@ -79,6 +81,22 @@ public class User {
 
     public void setPayment(Payment payment) {
         this.payment = payment;
+    }
+
+    public List<Invoice> getInvoicesBuyer() {
+        return invoicesBuyer;
+    }
+
+    public void setInvoicesBuyer(List<Invoice> invoicesBuyer) {
+        this.invoicesBuyer = invoicesBuyer;
+    }
+
+    public List<Invoice> getInvoicesSeller() {
+        return invoicesSeller;
+    }
+
+    public void setInvoicesSeller(List<Invoice> invoicesSeller) {
+        this.invoicesSeller = invoicesSeller;
     }
 
     @Override
